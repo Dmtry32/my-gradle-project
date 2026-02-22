@@ -1,0 +1,75 @@
+// All subprojects (lib and app) will inherit these settings
+subprojects {
+    // Apply plugins
+    apply plugin: 'java-library'      // For building Java libraries
+    apply plugin: 'maven-publish'     // For publishing artifacts
+    apply plugin: 'signing'            // For signing artifacts
+
+    // Use properties from gradle.properties
+    group = rootProject.group
+    version = rootProject.version
+
+    repositories {
+        mavenCentral()                 // Download dependencies from Maven Central
+    }
+
+    java {
+        // Attach sources and javadoc jars (required by Maven Central)
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    // Configure publishing for all subprojects
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                // The main Java component (the library JAR)
+                from components.java
+
+                // Generate the POM (Project Object Model) with required metadata
+                pom {
+                    name = project.name
+                    description = 'A demonstration library for Gradle and Sonatype'
+                    url = 'https://github.com/Dmtry32/my-gradle-project'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'Dmtry32'
+                            name = 'Dmtry32'
+                            email = 'anas.moussaoui@ump.ac.ma'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:git://github.com/Dmtry32/my-gradle-project.git'
+                        developerConnection = 'scm:git:ssh://github.com:Dmtry32/my-gradle-project.git'
+                        url = 'https://github.com/Dmtry32/my-gradle-project'
+                    }
+                }
+            }
+        }
+
+        // Define where to publish
+        repositories {
+            maven {
+                name = "centralPortal"    // Custom name for the repository
+                // Central Portal publishing endpoint
+                url = uri("https://central.sonatype.com/api/v1/publisher")
+                credentials {
+                    // Credentials will be supplied via project properties or environment
+                    username = project.findProperty("mavenCentralUsername")
+                    password = project.findProperty("mavenCentralPassword")
+                }
+            }
+        }
+    }
+
+    signing {
+        // Sign the mavenJava publication
+        sign publishing.publications.mavenJava
+    }
+}

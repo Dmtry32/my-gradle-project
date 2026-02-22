@@ -1,0 +1,6 @@
+//the root project name
+rootProject.name = "my-gradle-project"
+
+//Include subprojects 'lib' and 'app'
+
+include 'lib', 'app'

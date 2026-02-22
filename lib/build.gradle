@@ -1,0 +1,12 @@
+// No additional plugins needed; inherited from root.
+dependencies {
+    // Example: if you need Apache Commons, uncomment the line below.
+    // implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+    // Use JUnit Jupiter for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+}
+
+test {
+    useJUnitPlatform()
+}
