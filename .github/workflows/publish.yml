@@ -49,7 +49,7 @@ jobs:
       # Step 5: Run the publish task
       # We pass the version from the git tag (removing the leading 'v')
       - name: Publish to Central Portal
-        run: ./gradlew clean build publish -Pversion=${GITHUB_REF_NAME#v}
+        run: ./gradlew clean build publish -Pversion=${GITHUB_REF_NAME#v} --info
         env:
           # Project properties are set via environment variables with prefix ORG_GRADLE_PROJECT_
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
