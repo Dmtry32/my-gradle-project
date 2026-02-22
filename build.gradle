@@ -70,6 +70,12 @@ subprojects {
 
     signing {
         // Sign the mavenJava publication
-        sign publishing.publications.mavenJava
-    }
+        if (project.hasProperty('signingSecretKey') && project.hasProperty('signingPassword')) {
+            def signingKey = findProperty('signingSecretKey')
+            def signingPassword = findProperty('signingPassword')
+            useInMemoryPgpKeys(signingKey, signingPassword)
+        } else {
+            // Use keyring file
+            sign publishing.publications.mavenJava
+        }
 }
