@@ -11,3 +11,5 @@ lib – a reusable library module containing core functionality.
 app – an application module that depends on lib and demonstrates its usage.
 
 The project is configured to automatically build, test, and publish artifacts to Maven Central via Sonatype Central Portal using GitHub Actions.
+<img width="736" height="310" alt="image" src="https://github.com/user-attachments/assets/b963bd6c-630e-48fe-b5e8-2e71f76af3dc" />
+
